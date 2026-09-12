@@ -20,7 +20,7 @@ def _safe_context() -> dict:
                 "component_issues",
                 "issue_number,customer_id,issue_type,severity,runs_affected,issue_details,status,reported_at",
                 limit=100,
-            ) if row.get("status") not in ("verified", "closed")
+            ) if row.get("status") not in ("resolved", "verified", "closed")
         ],
     }
 

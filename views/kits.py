@@ -147,6 +147,7 @@ def render(user: dict) -> None:
     try:
         _report_issue(user)
         issues = select_rows("component_issues", order="reported_at", desc=True, limit=250)
+        issues = [row for row in issues if row.get("status") not in ("resolved", "verified", "closed")]
         _action(user, issues)
         _change_status(user, issues)
         _record_runs(user)

@@ -21,7 +21,7 @@ def render(user: dict) -> None:
             "issue_number,customer_id,issue_type,severity,status,runs_affected,reported_at",
             order="reported_at", desc=True, limit=50,
         )
-        issues = [row for row in issues if row.get("status") not in ("verified", "closed")][:20]
+        issues = [row for row in issues if row.get("status") not in ("resolved", "verified", "closed")][:20]
         notifications = select_rows(
             "notifications", "id,title,message,created_at,is_read",
             [("user_id", "eq", user["id"]), ("is_read", "eq", False)],
