@@ -3,33 +3,19 @@ import streamlit as st
 
 
 def apply_style() -> None:
-    dark_mode = st.session_state.get("dark_mode", False)
-    pio.templates.default = "plotly_dark" if dark_mode else "plotly_white"
+    pio.templates.default = "plotly_white"
 
-    if dark_mode:
-        colors = {
-            "app_top": "#10191F",
-            "app_bottom": "#0B1217",
-            "surface": "#162229",
-            "surface_soft": "#1B2A32",
-            "ink": "#EAF4F5",
-            "muted": "#9FB4BA",
-            "border": "#2A3D46",
-            "shadow": "rgba(0,0,0,.24)",
-            "input": "#111C22",
-        }
-    else:
-        colors = {
-            "app_top": "#F8FBFC",
-            "app_bottom": "#F3F7F8",
-            "surface": "#FFFFFF",
-            "surface_soft": "#F5F9FA",
-            "ink": "#18343B",
-            "muted": "#59747B",
-            "border": "#DCE9EB",
-            "shadow": "rgba(20,61,89,.05)",
-            "input": "#FFFFFF",
-        }
+    colors = {
+        "app_top": "#F8FBFC",
+        "app_bottom": "#F3F7F8",
+        "surface": "#FFFFFF",
+        "surface_soft": "#F5F9FA",
+        "ink": "#18343B",
+        "muted": "#59747B",
+        "border": "#DCE9EB",
+        "shadow": "rgba(20,61,89,.05)",
+        "input": "#FFFFFF",
+    }
 
     st.markdown(
         f"""
@@ -41,6 +27,7 @@ def apply_style() -> None:
           --surface-soft:{colors['surface_soft']};
           --border:{colors['border']};
           --input:{colors['input']};
+          color-scheme: light;
         }}
 
         html, body, [data-testid="stAppViewContainer"], .stApp {{
@@ -117,12 +104,6 @@ def apply_style() -> None:
           font-weight:750;
         }}
 
-        .theme-label {{
-          color:#AFC9CE !important;
-          font-size:12px;
-          margin-top:8px;
-        }}
-
         div[data-testid="stMetric"] {{
           background:var(--surface);
           border:1px solid var(--border);
@@ -158,7 +139,8 @@ def apply_style() -> None:
           background:var(--surface);
         }}
 
-        [data-baseweb="select"] > div,
+        div[data-baseweb="select"] > div,
+        div[data-baseweb="select"] > div:first-child,
         [data-baseweb="base-input"],
         [data-testid="stTextArea"] textarea,
         [data-testid="stTextInput"] input,
@@ -168,6 +150,89 @@ def apply_style() -> None:
           background:var(--input) !important;
           color:var(--ink) !important;
           border-color:var(--border) !important;
+        }}
+
+        div[data-baseweb="select"] span,
+        div[data-baseweb="select"] input,
+        div[data-baseweb="select"] svg {{
+          color:var(--ink) !important;
+          fill:var(--ink) !important;
+        }}
+
+        div[data-baseweb="popover"],
+        ul[role="listbox"] {{
+          background:var(--surface) !important;
+          border-color:var(--border) !important;
+        }}
+
+        li[role="option"] {{
+          background:var(--surface) !important;
+          color:var(--ink) !important;
+        }}
+
+        li[role="option"]:hover,
+        li[role="option"][aria-selected="true"] {{
+          background:var(--surface-soft) !important;
+        }}
+
+        [data-testid="stMain"] .stButton button,
+        [data-testid="stMain"] .stDownloadButton button {{
+          background:var(--surface) !important;
+          color:var(--ink) !important;
+          border:1px solid var(--border) !important;
+        }}
+
+        [data-testid="stMain"] .stButton button:hover,
+        [data-testid="stMain"] .stDownloadButton button:hover {{
+          border-color:#19B7B5 !important;
+          color:#19B7B5 !important;
+        }}
+
+        [data-testid="stExpander"] details,
+        [data-testid="stExpander"] summary {{
+          background:var(--surface) !important;
+          color:var(--ink) !important;
+          border-color:var(--border) !important;
+        }}
+
+        [data-testid="stExpander"] summary svg {{
+          fill:var(--ink) !important;
+        }}
+
+        [data-baseweb="tab-list"] {{
+          border-bottom:1px solid var(--border);
+          overflow-x:auto;
+        }}
+
+        [data-baseweb="tab"] p {{
+          color:var(--muted) !important;
+        }}
+
+        [data-baseweb="tab"][aria-selected="true"] p {{
+          color:var(--ink) !important;
+          font-weight:700;
+        }}
+
+        [data-testid="stAlert"] {{
+          border-radius:12px;
+          border-width:1px;
+        }}
+
+        [data-testid="stAlert"] p {{
+          color:inherit !important;
+        }}
+
+        input::placeholder,
+        textarea::placeholder {{
+          color:var(--muted) !important;
+          opacity:.85;
+        }}
+
+        [data-testid="stDateInput"] svg,
+        [data-testid="stTimeInput"] svg,
+        [data-testid="stNumberInput"] button {{
+          color:var(--ink) !important;
+          fill:var(--ink) !important;
         }}
 
         [data-testid="stDataFrame"],
@@ -206,120 +271,6 @@ def apply_style() -> None:
           .block-container {{
             padding:1rem;
           }}
-        }}
-
-        /* Keep native controls consistent with the selected theme */
-        :root {{
-          color-scheme: {"dark" if dark_mode else "light"};
-        }}
-
-        /* Fix dark-mode select boxes */
-        div[data-baseweb="select"] > div,
-        div[data-baseweb="select"] > div:first-child {{
-          background-color:var(--input) !important;
-          border-color:var(--border) !important;
-          color:var(--ink) !important;
-        }}
-
-        div[data-baseweb="select"] span,
-        div[data-baseweb="select"] input,
-        div[data-baseweb="select"] svg {{
-          color:var(--ink) !important;
-          fill:var(--ink) !important;
-        }}
-
-        /* Fix dropdown popup menus */
-        div[data-baseweb="popover"],
-        ul[role="listbox"] {{
-          background:var(--surface) !important;
-          border-color:var(--border) !important;
-        }}
-
-        li[role="option"] {{
-          background:var(--surface) !important;
-          color:var(--ink) !important;
-        }}
-
-        li[role="option"]:hover,
-        li[role="option"][aria-selected="true"] {{
-          background:var(--surface-soft) !important;
-        }}
-
-        /* Fix the unwanted rectangle around Dark mode */
-        [data-testid="stSidebar"] [data-testid="stToggle"],
-        [data-testid="stSidebar"] [data-testid="stToggle"] label {{
-          background:transparent !important;
-          border:none !important;
-          box-shadow:none !important;
-        }}
-
-        [data-testid="stSidebar"] [data-testid="stToggle"] {{
-          margin-top:-4px;
-        }}
-
-        /* Consistent main-area buttons */
-        [data-testid="stMain"] .stButton button,
-        [data-testid="stMain"] .stDownloadButton button {{
-          background:var(--surface) !important;
-          color:var(--ink) !important;
-          border:1px solid var(--border) !important;
-        }}
-
-        [data-testid="stMain"] .stButton button:hover,
-        [data-testid="stMain"] .stDownloadButton button:hover {{
-          border-color:#19B7B5 !important;
-          color:#19B7B5 !important;
-        }}
-
-        /* Consistent expanders */
-        [data-testid="stExpander"] details,
-        [data-testid="stExpander"] summary {{
-          background:var(--surface) !important;
-          color:var(--ink) !important;
-          border-color:var(--border) !important;
-        }}
-
-        [data-testid="stExpander"] summary svg {{
-          fill:var(--ink) !important;
-        }}
-
-        /* Consistent tabs */
-        [data-baseweb="tab-list"] {{
-          border-bottom:1px solid var(--border);
-          overflow-x:auto;
-        }}
-
-        [data-baseweb="tab"] p {{
-          color:var(--muted) !important;
-        }}
-
-        [data-baseweb="tab"][aria-selected="true"] p {{
-          color:var(--ink) !important;
-          font-weight:700;
-        }}
-
-        /* Consistent alerts */
-        [data-testid="stAlert"] {{
-          border-radius:12px;
-          border-width:1px;
-        }}
-
-        [data-testid="stAlert"] p {{
-          color:inherit !important;
-        }}
-
-        /* Input placeholder and icon visibility */
-        input::placeholder,
-        textarea::placeholder {{
-          color:var(--muted) !important;
-          opacity:.85;
-        }}
-
-        [data-testid="stDateInput"] svg,
-        [data-testid="stTimeInput"] svg,
-        [data-testid="stNumberInput"] button {{
-          color:var(--ink) !important;
-          fill:var(--ink) !important;
         }}
         </style>
         """,

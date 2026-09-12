@@ -1,6 +1,7 @@
--- Medicine Manager: complete Supabase schema
--- Run in a NEW Supabase project's SQL Editor. Safe to rerun for schema objects and seed master data.
-
+-- Medicine Manager: fresh installation schema
+-- IMPORTANT: Run only in a new, empty Supabase project.
+-- Do not run this file over the earlier step-by-step database.
+-- Existing projects must use app_setup.sql instead.
 create extension if not exists pgcrypto;
 
 create table if not exists public.profiles (

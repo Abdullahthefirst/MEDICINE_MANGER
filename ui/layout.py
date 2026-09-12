@@ -48,17 +48,6 @@ def navigation(user: dict) -> str:
             unsafe_allow_html=True,
         )
 
-        st.markdown(
-            "<div class='theme-label'>Appearance</div>",
-            unsafe_allow_html=True,
-        )
-
-        dark_mode = st.toggle(
-            "🌙 Dark mode",
-            key="dark_mode",
-            help="Switch between light and dark appearance.",
-        )
-
         st.divider()
 
         pages = ROLE_NAV.get(user.get("role"), ["Overview"])
