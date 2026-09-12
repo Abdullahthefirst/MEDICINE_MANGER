@@ -24,18 +24,51 @@ ROLE_NAV = {
     ],
 }
 
+PAGE_LABELS = {
+    "Overview": "📊 Overview",
+    "Customers": "🏥 Customers",
+    "Inventory": "📦 Inventory",
+    "Data Entry": "✍️ Data Entry",
+    "Finance": "💳 Finance",
+    "Downtime": "⏱️ Downtime",
+    "Kit Issues": "🧩 Kit Issues",
+    "AI Analysis": "✨ AI Analysis",
+    "Administration": "⚙️ Administration",
+}
+
 
 def navigation(user: dict) -> str:
     with st.sidebar:
         st.markdown("## Medicine Manager")
         st.caption(user.get("full_name", "User"))
-        st.markdown(f"`{user.get('role', '').replace('_', ' ').title()}`")
+
+        role = user.get("role", "").replace("_", " ").title()
+        st.markdown(
+            f"<span class='role-badge'>🛡️ {role}</span>",
+            unsafe_allow_html=True,
+        )
+
+        st.markdown(
+            "<div class='theme-label'>Appearance</div>",
+            unsafe_allow_html=True,
+        )
+        st.toggle("🌙 Dark mode", key="dark_mode")
+
         st.divider()
+
         pages = ROLE_NAV.get(user.get("role"), ["Overview"])
-        page = st.radio("Navigation", pages, label_visibility="collapsed")
+        page = st.radio(
+            "Navigation",
+            pages,
+            format_func=lambda item: PAGE_LABELS.get(item, item),
+            label_visibility="collapsed",
+        )
+
         st.divider()
-        if st.button("Sign out", use_container_width=True):
+
+        if st.button("🚪 Sign out", use_container_width=True):
             sign_out()
+
     return page
 
 

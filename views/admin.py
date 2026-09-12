@@ -193,7 +193,14 @@ def _exports() -> None:
 
 def render(user: dict) -> None:
     page_header("Administration", "Master data, assignments, approvals and exports")
-    tabs = st.tabs(["Contract services", "Inventory items", "Kits", "Users & locations", "Backdated entries", "Exports"])
+    tabs = st.tabs([
+        "📄 Contract services",
+        "📦 Inventory items",
+        "🧩 Kits",
+        "👥 Users & locations",
+        "🕒 Backdated entries",
+        "📤 Exports",
+    ])
     try:
         with tabs[0]: _contract_services(user)
         with tabs[1]: _inventory_item(user)

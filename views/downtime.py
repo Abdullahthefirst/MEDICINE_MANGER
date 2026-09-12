@@ -102,7 +102,10 @@ def render(user: dict) -> None:
     except Exception as exc:
         st.error(f"Downtime data could not be loaded: {exc}")
         return
-    tabs = st.tabs(["Detailed events", "Monthly totals"])
+    tabs = st.tabs([
+        "📝 Detailed events",
+        "📅 Monthly totals",
+    ])
     with tabs[0]:
         show_table(events, {
             "event_number": "Event", "title": "Title", "downtime_category": "Category",

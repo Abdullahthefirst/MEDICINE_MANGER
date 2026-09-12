@@ -133,7 +133,11 @@ def render(user: dict) -> None:
     except Exception as exc:
         st.error(f"Kit data could not be loaded: {exc}")
         return
-    tabs = st.tabs(["Issues", "Resolution history", "Kit run balances"])
+    tabs = st.tabs([
+        "⚠️ Issues",
+        "🛠️ Resolution history",
+        "🧪 Kit run balances",
+    ])
     with tabs[0]:
         show_table(issues, {
             "issue_number": "Issue", "issue_type": "Type", "severity": "Severity",

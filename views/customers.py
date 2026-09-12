@@ -108,7 +108,15 @@ def render(user: dict) -> None:
         c.metric("Available batches", row.get("available_batches", 0))
         d.metric("Downtime", f"{row.get('quarter_downtime_hours', 0)} hrs")
 
-    tabs = st.tabs(["Contracts", "Quarterly", "Inventory", "Usage", "Deliveries", "Downtime", "Invoices"])
+    tabs = st.tabs([
+        "📄 Contracts",
+        "📊 Quarterly",
+        "📦 Inventory",
+        "🧾 Usage",
+        "🚚 Deliveries",
+        "⏱️ Downtime",
+        "💳 Invoices",
+    ])
     with tabs[0]:
         show_table(contracts, {
             "contract_number": "Contract", "start_date": "Start", "end_date": "End",

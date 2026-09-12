@@ -163,7 +163,10 @@ def render(user: dict) -> None:
     b.metric("Paid", money(paid))
     c.metric("Outstanding", money(outstanding))
     d.metric("Overdue invoices", overdue)
-    tabs = st.tabs(["Invoice balances", "Quarterly performance"])
+    tabs = st.tabs([
+        "💳 Invoice balances",
+        "📊 Quarterly performance",
+    ])
     with tabs[0]:
         show_table(balances, {
             "invoice_number": "Invoice", "issue_date": "Issued", "due_date": "Due",

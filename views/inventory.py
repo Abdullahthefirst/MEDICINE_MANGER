@@ -30,7 +30,13 @@ def render(user: dict) -> None:
     c.metric("Estimated runs", number(estimated_runs, 1))
     d.metric("Expiry / low-stock alerts", len(expiry) + len(low_stock))
 
-    tabs = st.tabs(["Available stock", "Working days", "Expiry", "Low stock", "Movement history"])
+    tabs = st.tabs([
+        "📦 Available stock",
+        "📅 Working days",
+        "⏳ Expiry",
+        "⚠️ Low stock",
+        "↔️ Movement history",
+    ])
     with tabs[0]:
         show_table(available, {
             "location_name": "Location", "item_name": "Item", "manufacturer_cat_number": "Manufacturer Cat #",
