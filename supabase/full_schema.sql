@@ -619,7 +619,7 @@ with q as (
 ), inv as (
     select customer_id,count(distinct batch_id) available_batches from public.app_available_inventory where customer_id is not null group by 1
 ), issues as (
-    select customer_id,count(*) open_component_issues from public.component_issues where status not in ('verified','closed') group by 1
+    select customer_id,count(*) open_component_issues from public.component_issues where status not in ('resolved','verified','closed') group by 1
 )
 select c.id customer_id,c.customer_code,c.hospital_name,c.branch_name,
     coalesce(q.sales_value,0) quarter_sales,coalesce(q.patients_served,0) quarter_patients,
