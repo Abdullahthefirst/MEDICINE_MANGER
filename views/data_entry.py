@@ -113,7 +113,7 @@ def _receipt(user: dict) -> None:
 
 
 def _transfer(user: dict) -> None:
-    stock = select_rows("app_available_inventory", order="item_name")
+    stock = select_rows("available_inventory", order="item_name")
     destinations = select_rows("stock_locations", "id,location_name,location_type", [("location_type", "eq", "hospital")], order="location_name")
     if not stock or not destinations:
         st.info("Available warehouse stock and hospital locations are required.")
@@ -149,7 +149,7 @@ def _transfer(user: dict) -> None:
 
 
 def _consume(user: dict) -> None:
-    stock = [row for row in select_rows("app_available_inventory", order="item_name") if row.get("customer_id")]
+    stock = [row for row in select_rows("available_inventory", order="item_name") if row.get("customer_id")]
     usages = select_rows("customer_usage", "id,usage_number,customer_id,usage_date", order="usage_date", desc=True, limit=100)
     if not stock:
         st.info("No accessible hospital stock is available.")

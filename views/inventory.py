@@ -12,7 +12,7 @@ from ui.layout import page_header
 def render(user: dict) -> None:
     page_header("Inventory", "Warehouse and hospital stock calculated from the movement ledger")
     try:
-        available = select_rows("app_available_inventory", order="expiry_date")
+        available = select_rows("available_inventory", order="expiry_date")
         working = select_rows("inventory_working_days")
         expiry = select_rows("expiry_alerts", order="expiry_date")
         low_stock = select_rows("low_stock_alerts", order="item_name")

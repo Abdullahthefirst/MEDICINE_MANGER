@@ -181,7 +181,7 @@ def _backdates(user: dict) -> None:
 def _exports() -> None:
     export_tables = {
         "Customers": "customers", "Customer overview": "customer_management_overview",
-        "Inventory": "app_available_inventory", "Expiry alerts": "expiry_alerts",
+        "Inventory": "available_inventory", "Expiry alerts": "expiry_alerts",
         "Quarterly statistics": "customer_quarterly_statistics", "Downtime": "downtime_event_details",
         "Component issues": "component_issues", "Invoices": "invoice_balances",
     }

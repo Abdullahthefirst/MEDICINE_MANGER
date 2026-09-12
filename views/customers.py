@@ -90,7 +90,7 @@ def render(user: dict) -> None:
     try:
         overview = select_rows("customer_management_overview", filters=[("customer_id", "eq", selected["id"])])
         contracts = select_rows("current_contracts", filters=[("customer_id", "eq", selected["id"])], order="start_date", desc=True)
-        inventory = select_rows("app_available_inventory", filters=[("customer_id", "eq", selected["id"])], order="expiry_date")
+        inventory = select_rows("available_inventory", filters=[("customer_id", "eq", selected["id"])], order="expiry_date")
         usage = select_rows("customer_usage", filters=[("customer_id", "eq", selected["id"])], order="usage_date", desc=True, limit=100)
         deliveries = select_rows("customer_delivery_history", filters=[("customer_id", "eq", selected["id"])], order="movement_date", desc=True, limit=100)
         downtime = select_rows("downtime_event_details", filters=[("customer_id", "eq", selected["id"])], order="started_at", desc=True, limit=100)
