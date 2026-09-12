@@ -15,12 +15,19 @@ def _report_issue(user: dict) -> None:
     kits = select_rows("individual_kits", "id,kit_identifier,kit_definition_id,status", order="created_at", desc=True)
     customers = select_rows("customers", "id,hospital_name,branch_name,customer_code", order="hospital_name")
     components = select_rows("inventory_items", "id,item_name,item_code,manufacturer_cat_number", [("item_type", "eq", "kit_component")], order="item_name")
-    if not kits or not customers:
-        return
-    kit_labels, kit_map = options(kits, ["kit_identifier", "status"])
-    customer_labels, customer_map = options(customers, ["hospital_name", "branch_name", "customer_code"])
-    component_labels, component_map = options(components, ["item_name", "manufacturer_cat_number"])
+
     with st.expander("Report kit component issue"):
+        if not kits:
+            st.info("No unique kits are registered yet. Add a kit before reporting component issues.")
+            return
+        if not customers:
+            st.info("No hospital customers are registered yet. Add a customer record before reporting a kit issue.")
+            return
+
+        kit_labels, kit_map = options(kits, ["kit_identifier", "status"])
+        customer_labels, customer_map = options(customers, ["hospital_name", "branch_name", "customer_code"])
+        component_labels, component_map = options(components, ["item_name", "manufacturer_cat_number"])
+
         with st.form("report_component_issue"):
             kit_label = st.selectbox("Unique kit", kit_labels)
             customer_label = st.selectbox("Affected hospital", customer_labels)
