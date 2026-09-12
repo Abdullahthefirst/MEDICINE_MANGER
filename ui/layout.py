@@ -52,7 +52,12 @@ def navigation(user: dict) -> str:
             "<div class='theme-label'>Appearance</div>",
             unsafe_allow_html=True,
         )
-        st.toggle("🌙 Dark mode", key="dark_mode")
+
+        dark_mode = st.toggle(
+            "🌙 Dark mode",
+            key="dark_mode",
+            help="Switch between light and dark appearance.",
+        )
 
         st.divider()
 
