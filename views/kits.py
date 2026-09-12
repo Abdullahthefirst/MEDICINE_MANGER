@@ -35,9 +35,15 @@ def _report_issue(user: dict) -> None:
             if not details.strip():
                 st.error("Issue details are required.")
                 return
+
+            selected_kit = kit_map[kit_label]
+            if selected_kit.get("status") in {"quarantined", "expired", "disposed"}:
+                st.error("This kit cannot have a new issue recorded while it is quarantined, expired, or disposed.")
+                return
+
             component = component_map.get(component_label)
             payload = clean_payload({
-                "issue_number": reference("ISS"), "individual_kit_id": kit_map[kit_label]["id"],
+                "issue_number": reference("ISS"), "individual_kit_id": selected_kit["id"],
                 "component_item_id": component["id"] if component else None,
                 "customer_id": customer_map[customer_label]["id"], "issue_type": issue_type,
                 "severity": severity, "runs_affected": runs, "issue_details": details.strip(),
@@ -111,8 +117,17 @@ def _record_runs(user: dict) -> None:
             runs = st.number_input("Runs used", min_value=1, step=1)
             submitted = st.form_submit_button("Record runs")
         if submitted:
+            selected_kit = kit_map[kit_label]
+            if selected_kit.get("status") in {"quarantined", "expired", "disposed"}:
+                st.error("This kit cannot be used while it is quarantined, expired, or disposed.")
+                return
+
+            if runs > int(selected_kit.get("runs_remaining", 0)):
+                st.error("Runs used cannot exceed the remaining kit runs balance.")
+                return
+
             payload = {
-                "individual_kit_id": kit_map[kit_label]["individual_kit_id"],
+                "individual_kit_id": selected_kit["individual_kit_id"],
                 "customer_usage_id": usage_map[usage_label]["id"],
                 "runs_used": runs, "created_by": user["id"],
             }
